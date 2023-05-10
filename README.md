@@ -2,11 +2,12 @@
 
 ## install & configuration
 
-replace `andersundsehr/aus_project` with your site-package package name.
+replace `andersundsehr/aus_project` with your site-package package name:
 ````sh
 composer config extra.andersundsehr/typo3-sort-extensions.site-package andersundsehr/aus_project
 composer req andersundsehr/typo3-sort-extensions
-``
+````
+
 ## what does it do
 
 This plugin automatically copies all externally* required TYPO3 Extensions to the site-package `require` section.  
