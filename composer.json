@@ -1,0 +1,44 @@
+{
+  "name": "andersundsehr/typo3-sort-extensions",
+  "description": "Solves the problem of the extension order",
+  "license": "GPL-2.0-or-later",
+  "type": "composer-plugin",
+  "keywords": [
+    "dev"
+  ],
+  "authors": [
+    {
+      "name": "Matthias Vogel",
+      "email": "m.vogel@andersundsehr.com"
+    }
+  ],
+  "require": {
+    "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
+    "composer-plugin-api": "^2.1"
+  },
+  "require-dev": {
+    "composer/composer": "^2.5.5",
+    "pluswerk/grumphp-config": "^6.5.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "AUS\\Typo3SortPackages\\": "src/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "phpro/grumphp": true,
+      "phpstan/extension-installer": true,
+      "ergebnis/composer-normalize": true,
+      "pluswerk/grumphp-config": true
+    }
+  },
+  "extra": {
+    "class": "AUS\\Typo3SortPackages\\Plugin"
+  },
+  "scripts": {
+    "post-update-cmd": [
+      "composer bump -D"
+    ]
+  }
+}
