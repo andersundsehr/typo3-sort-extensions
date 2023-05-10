@@ -10,7 +10,7 @@ class Typo3Extensions
      * @param array<string> $remoteExtensions
      * @param array<string> $localExtensions
      */
-    public function __construct(public readonly array $remoteExtensions, public readonly array $localExtensions)
+    public function __construct(public array $remoteExtensions, public array $localExtensions)
     {
     }
 }
