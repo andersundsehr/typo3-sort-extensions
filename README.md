@@ -5,7 +5,7 @@
 replace `andersundsehr/aus_project` with your site-package package name:
 ````sh
 composer config extra.andersundsehr/typo3-sort-extensions.site-package andersundsehr/aus_project
-composer req andersundsehr/typo3-sort-extensions
+composer req --dev andersundsehr/typo3-sort-extensions
 ````
 
 ## what does it do
