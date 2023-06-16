@@ -17,7 +17,7 @@ use RuntimeException;
 
 use function realpath;
 
-class Plugin implements PluginInterface, EventSubscriberInterface
+final class Plugin implements PluginInterface, EventSubscriberInterface
 {
     /**
      * @return string[]
