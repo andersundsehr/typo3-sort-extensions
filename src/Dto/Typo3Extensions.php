@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AUS\Typo3SortPackages\Dto;
 
-class Typo3Extensions
+final class Typo3Extensions
 {
     /**
      * @param array<string> $remoteExtensions

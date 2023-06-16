@@ -17,7 +17,7 @@ use RuntimeException;
 
 use function realpath;
 
-class Plugin implements PluginInterface, EventSubscriberInterface
+final class Plugin implements PluginInterface, EventSubscriberInterface
 {
     /**
      * @return string[]
@@ -148,7 +148,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
     private function isInGit(mixed $path): bool
     {
-        return (bool)exec('git ls-files --error-unmatch ' . realpath($path) . '/composer.json');
+        return (bool)exec('git ls-files --error-unmatch ' . realpath($path) . '/composer.json 2> /dev/null');
     }
 
     public function activate(Composer $composer, IOInterface $io): void
