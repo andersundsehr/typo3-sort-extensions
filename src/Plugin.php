@@ -36,6 +36,7 @@ final class Plugin implements PluginInterface, EventSubscriberInterface
         /** @var array<string> $rootRequiredPackages */
         $rootRequiredPackages = [
             ...array_keys($rootPackage->getRequires()),
+            ...array_keys($rootPackage->getDevRequires()),
             ...array_keys($rootPackage->getSuggests()),
         ];
 
@@ -47,13 +48,13 @@ final class Plugin implements PluginInterface, EventSubscriberInterface
             );
         }
 
-        $changed = $this->requireExtensions($copyDestination, ...$typo3Extensions->remoteExtensions);
+        $changed = $this->suggestExtensions($copyDestination, ...$typo3Extensions->remoteExtensions);
         foreach ($typo3Extensions->localExtensions as $extension) {
             if ($extension === $copyDestination) {
                 continue;
             }
 
-            $changed = $this->requireExtensions($extension, $copyDestination) || $changed;
+            $changed = $this->suggestExtensions($extension, $copyDestination) || $changed;
         }
 
         if ($changed) {
@@ -67,7 +68,7 @@ final class Plugin implements PluginInterface, EventSubscriberInterface
         }
     }
 
-    private function getTypo3Extensions(string $rootPackageName, string ...$packageNames): Typo3Extensions
+    private function getTypo3Extensions(string $rootPackageName, string ...$rootRequiredPackageNames): Typo3Extensions
     {
         $remoteExtensions = [];
         $localExtensions = [];
@@ -82,7 +83,7 @@ final class Plugin implements PluginInterface, EventSubscriberInterface
                     continue;
                 }
 
-                if (!in_array($name, $packageNames, true)) {
+                if (!in_array($name, $rootRequiredPackageNames, true)) {
                     // only root required packages.
                     continue;
                 }
@@ -118,7 +119,7 @@ final class Plugin implements PluginInterface, EventSubscriberInterface
         return new Typo3Extensions(array_keys($remoteExtensions), array_keys($localExtensions));
     }
 
-    private function requireExtensions(string $copyDestination, string ...$extensionNames): bool
+    private function suggestExtensions(string $copyDestination, string ...$extensionNames): bool
     {
         $composerJsonPath = realpath(InstalledVersions::getInstallPath($copyDestination) . '/composer.json');
         assert(is_string($composerJsonPath), sprintf('cloud not find realpath for %s', $copyDestination));
@@ -129,8 +130,8 @@ final class Plugin implements PluginInterface, EventSubscriberInterface
 
         $changed = false;
         foreach ($extensionNames as $extensionName) {
-            if (!isset($rawData['require'][$extensionName])) {
-                $manipulator->addLink('require', $extensionName, '*', true);
+            if (!isset($rawData['suggest'][$extensionName])) {
+                $manipulator->addLink('suggest', $extensionName, '*', true);
                 $changed = true;
             }
         }
